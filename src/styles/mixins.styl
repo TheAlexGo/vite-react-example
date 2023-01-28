@@ -1,0 +1,32 @@
+fontFace($font-family, $file-path, $weight = normal, $style = normal) {
+    @font-face {
+        font-family: $font-family;
+        font-weight: $weight;
+        font-style: $style;
+        src: url($file-path + '.ttf') format('truetype');
+    }
+}
+
+hover($stateClass) {
+    &:not(:disabled):not({$stateClass}__static):hover,
+    &{$stateClass}__hover {
+        {block};
+    }
+}
+
+multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true) {
+    if $showEllipsis {
+        display: -webkit-box;
+    }
+    else {
+        display: block;
+    }
+    -webkit-line-clamp: $countOfLine;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+
+    max-height: ($countOfLine * $lineHeight);
+}
