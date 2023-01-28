@@ -19,15 +19,11 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
+    "plugins": ["react", "@typescript-eslint"],
     "settings": {
         "react": {
             "version": "detect"
         },
-        // Tells eslint how to resolve imports
         "import/resolver": {
             "node": {
                 "paths": ["src"],
@@ -36,5 +32,26 @@
         }
     },
     "rules": {
+        "import/no-unresolved": 0,
+        "react/jsx-filename-extension": [
+            2,
+            {
+                "extensions": [".ts", ".tsx"]
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "import/no-extraneous-dependencies": [
+            1,
+            {
+                "devDependencies": true
+            }
+        ]
     }
 }

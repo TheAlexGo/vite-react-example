@@ -1,4 +1,3 @@
 build/
 node_modules/
 .prettierrc.json
-npm install husky -D
