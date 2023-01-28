@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "lint": "eslint . --ext .ts,.tsx",
+    "tslint": "tsc",
+    "lint": "eslint . --ext .ts,.tsx && npm run tslint",
     "prepare": "husky install"
   },
   "dependencies": {
