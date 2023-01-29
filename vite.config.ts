@@ -3,7 +3,8 @@ import svgr from 'vite-plugin-svgr';
 import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
 import path from 'path';
-import eslintPlugin from "vite-plugin-eslint";
+import eslintPlugin from 'vite-plugin-eslint';
+import stylelintPlugin from 'vite-plugin-stylelint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,15 +25,12 @@ export default defineConfig({
             include: '**/*.tsx'
         }),
         svgr({}),
-        eslintPlugin()
-    ],
-    css: {
-        preprocessorOptions: {
-            styl: {
-                imports: [
-                    path.resolve(__dirname, 'src/styles/common.styl')
-                ],
-            },
-        },
-    },
+        eslintPlugin(),
+        stylelintPlugin({
+            fix: true,
+            lintOnStart: true,
+            emitWarning: true,
+            emitError: true
+        })
+    ]
 })
