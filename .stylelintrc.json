@@ -9,6 +9,7 @@
     ],
     "rules": {
         "indentation": "tab",
-        "stylus/indentation": "tab"
+        "stylus/indentation": "tab",
+        "max-empty-lines": 1
     }
 }
