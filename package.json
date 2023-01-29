@@ -10,11 +10,11 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "tslint": "tsc",
-    "lint": "eslint . --ext .ts,.tsx && npm run tslint",
+    "lint": "eslint . --ext .ts,.tsx && npm run tslint && npm run stylelint",
     "eslintfix": "eslint . --ext .ts,.tsx --fix",
     "prepare": "husky install",
-    "stylelint": "stylelint '**/*{.css,.scss}'",
-    "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix"
+    "stylelint": "stylelint '**/*.styl'",
+    "stylelint:fix": "stylelint '**/*.styl' --fix"
   },
   "dependencies": {
     "react": "^18.2.0",
