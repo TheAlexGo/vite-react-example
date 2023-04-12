@@ -1,3 +1,6 @@
-build/
 node_modules/
+dist/
+dev-dist/
 .prettierrc.json
+.eslintrc.json
+.storybook

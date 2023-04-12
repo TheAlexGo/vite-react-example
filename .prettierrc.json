@@ -1,15 +1,10 @@
 {
     "bracketSpacing": true,
-    "printWidth": 120,
+    "printWidth": 100,
     "semi": true,
     "singleQuote": true,
     "jsxSingleQuote": false,
     "tabWidth": 4,
     "trailingComma": "none",
-    "prettier/prettier": [
-        "error",
-        {
-            "endOfLine": "auto"
-        }
-    ]
+    "endOfLine": "auto"
 }

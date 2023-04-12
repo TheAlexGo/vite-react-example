@@ -1,24 +1,45 @@
-loadFont($font-family, $file-path, $weight = normal, $style = normal)
-	@font-face
-		font-weight $weight
-		font-family $font-family
-		font-style $style
-		src url($file-path + '.ttf') format("truetype")
+loadFont($font-family, $file-path, $weight = normal, $style = normal) {
+    @font-face {
+        font-weight: $weight;
+        font-family: $font-family;
+        font-style: $style;
+        src: url($file-path + '.ttf') format("truetype");
+    }
+}
 
-hover($stateClass)
-	&:not(:disabled):not({$stateClass}__static):hover
-	&{$stateClass}__hover
-		{block}
+hover($stateClass) {
+    &:not(:disabled):not({$stateClass}__static):hover
+    &{$stateClass}__hover {
+        {block};
+    }
+}
 
-multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true)
-	if $showEllipsis
-		display -webkit-box
-	else
-		display block
+multiEllip($countOfLine, $lineHeight = 16px, $showEllipsis = true) {
+    if $showEllipsis {
+        display: -webkit-box;
+    }
+    else {
+        display: block;
+    }
 
-	max-height ($countOfLine * $lineHeight)
-	overflow hidden
-	text-overflow ellipsis
-	word-wrap break-word
-	-webkit-line-clamp $countOfLine
-	-webkit-box-orient vertical
+    max-height: ($countOfLine * $lineHeight);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: $countOfLine;
+    -webkit-box-orient: vertical;
+}
+
+// Theme
+darkTheme() {
+    @media (prefers-color-scheme dark) {
+        :root:not(.__ui-theme_light) & {
+            {block};
+        }
+    }
+
+    :root.__ui-theme_dark & {
+        {block};
+    }
+}
+// /Theme

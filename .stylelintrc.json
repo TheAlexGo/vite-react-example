@@ -8,8 +8,10 @@
         "stylelint-stylus"
     ],
     "rules": {
-        "indentation": "tab",
-        "stylus/indentation": "tab",
+        "stylus/indentation": 4,
+        "stylus/declaration-colon": "always",
+        "stylus/semicolon": "always",
+        "stylus/pythonic": "never",
         "max-empty-lines": 1
     }
 }

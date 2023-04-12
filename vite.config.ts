@@ -1,8 +1,9 @@
+import path from 'path';
+import autoprefixer from 'autoprefixer';
 import { defineConfig } from 'vite';
-import svgr from 'vite-plugin-svgr';
+import svgrPlugin from 'vite-plugin-svgr';
 import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
-import path from 'path';
 import eslintPlugin from 'vite-plugin-eslint';
 import stylelintPlugin from 'vite-plugin-stylelint';
 
@@ -14,23 +15,39 @@ export default defineConfig({
         }
     },
     plugins: [
-        legacy({
-            targets: [
-                'defaults',
-                'not IE 11'
-            ]
-        }),
+        legacy(),
         react({
             exclude: /\.stories\.(t|j)sx?$/,
             include: '**/*.tsx'
         }),
-        svgr({}),
+        svgrPlugin(),
         eslintPlugin(),
         stylelintPlugin({
-            fix: true,
-            lintOnStart: true,
-            emitWarning: true,
-            emitError: true
+            fix: true
         })
-    ]
+    ],
+    css: {
+      postcss: {
+        plugins: [autoprefixer({})]
+      }
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    /**
+                     * Разбиваем используемые модули из node_modules на чанки, а не складируем в одном index-файле
+                     * */
+                    if (id.includes('node_modules')) {
+                        return id.toString().split('node_modules/')[1].split('/')[0].toString();
+                    }
+                    return null;
+                }
+            }
+        },
+        minify: 'esbuild'
+    },
+    server: {
+        host: true
+    }
 })
