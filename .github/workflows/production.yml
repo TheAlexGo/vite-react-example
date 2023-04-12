@@ -1,0 +1,63 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: ["master"]
+
+env:
+  DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+  DEPLOY_STORYBOOK_PATH: ${{ secrets.DEPLOY_STORYBOOK_PATH }}
+  BUILD_SCRIPT: npm run build
+  BUILD_STORYBOOK_SCRIPT: npm run build-storybook
+  BUILD_SCRIPT_OUTPUT: dist
+  BUILD_STORYBOOK_SCRIPT_OUTPUT: sb-dist
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Делаем checkout текущей ветки
+      - uses: actions/checkout@v3
+      # Устанавливаем Node.JS для сборки приложения
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      # Записываем в переменные окружения имя текущей ветки
+      - name: master
+        id: load-variables
+        shell: bash
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/} >> $GITHUB_OUTPUT | sed 's/\//-/g' | sed 's/\./_/g')"
+      # Устанавливаем зависимости для сборки
+      - name: Install Dependencies
+        run: npm ci
+      # Собираем приложение
+      - name: Build Application
+        run: $BUILD_SCRIPT
+      # Собираем storybook приложение
+      - name: Build Storybook Application
+        run: $BUILD_STORYBOOK_SCRIPT
+      # Доставляем собранное приложение на сервер
+      - name: Deploy to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          port: ${{ secrets.DEPLOY_SERVER_PORT }}
+          username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+          key: ${{ secrets.DEPLOY_SERVER_KEY }}
+          source: ${{ env.BUILD_SCRIPT_OUTPUT }}
+          target: ${{ env.DEPLOY_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
+          strip_components: 1
+      # Доставляем собранный storybook приложение на сервер
+      - name: Deploy Storybook to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          port: ${{ secrets.DEPLOY_SERVER_PORT }}
+          username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+          key: ${{ secrets.DEPLOY_SERVER_KEY }}
+          source: ${{ env.BUILD_STORYBOOK_SCRIPT_OUTPUT }}
+          target: ${{ env.DEPLOY_STORYBOOK_PATH }}/${{ steps.load-variables.outputs.BRANCH_NAME }}
+          strip_components: 1
+      - name: Print Info
+        run: echo "Deployed successfully https://${{ secrets.SITE_DOMAINS }}"
