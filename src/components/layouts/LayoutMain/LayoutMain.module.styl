@@ -1,0 +1,41 @@
+$size-top = s('calc(%s + env(safe-area-inset-top))', $size-header);
+$size-right = s('calc(%s + env(safe-area-inset-right))', $offset-4x);
+$size-bottom = s('calc(%s + env(safe-area-inset-bottom))', $size-nav);
+$size-left = s('calc(%s + env(safe-area-inset-left))', $offset-4x);
+
+.layout {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 $size-right $size-bottom $size-left;
+
+    &.__is {
+        &-with_heading {
+            padding-top: $size-top;
+        }
+    }
+}
+
+.navbar
+.header {
+    position: fixed;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 0 s('env(safe-area-inset-right)') 0 s('env(safe-area-inset-left)');
+}
+
+.header {
+    top: 0;
+    padding-top: s('env(safe-area-inset-top)');
+    font-size: $fs-m;
+    background-color: $color_surface;
+}
+
+.navbar {
+    bottom: 0;
+    padding-bottom: s('env(safe-area-inset-bottom)');
+    background-color: $color_surface;
+}

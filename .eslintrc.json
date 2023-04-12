@@ -3,13 +3,19 @@
         "browser": true,
         "es2021": true
     },
+    "plugins": [
+        "react",
+        "prettier",
+        "@typescript-eslint"
+    ],
     "extends": [
+        "airbnb",
+        "prettier",
+        "airbnb/hooks",
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "airbnb",
-        "airbnb/hooks",
-        "eslint-config-prettier"
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -19,19 +25,18 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint"],
-    "settings": {
-        "react": {
-            "version": "detect"
-        },
-        "import/resolver": {
-            "node": {
-                "paths": ["src"],
-                "extensions": [".ts", ".tsx"]
-            }
-        }
+    "globals": {
+        "JSX": true
     },
     "rules": {
+        // Включаем prettier
+        "prettier/prettier": [
+            2,
+            {},
+            {
+                "usePrettierrc": true
+            }
+        ],
         "import/no-unresolved": 0,
         "react/jsx-filename-extension": [
             2,
@@ -48,10 +53,93 @@
             }
         ],
         "import/no-extraneous-dependencies": [
-            1,
+            2,
             {
                 "devDependencies": true
             }
-        ]
+        ],
+        // Разрешаем отсутствие дефолтного экспорта
+        "import/prefer-default-export": 0,
+        // Разрешаем использовать разные определния для компонентов
+        "react/function-component-definition": [
+            2,
+            {
+                "namedComponents": "arrow-function",
+                "unnamedComponents": "arrow-function"
+            }
+        ],
+        // Отключаем стандартную проверку на уже объявленные переменные в скопе
+        "no-shadow": 0,
+        // Разрешаем применять spread к пропсам
+        "react/jsx-props-no-spreading": [2, {
+            "html": "ignore",
+            "custom": "ignore",
+            "exceptions": [""]
+        }],
+        // Разрешаем создавать методы класса без использования в них this
+        "class-methods-use-this": 0,
+        "import/order": [
+            1,
+            {
+                "groups": [
+                    "index",
+                    "builtin",
+                    "external",
+                    "internal",
+                    ["sibling", "parent"],
+                    "object",
+                    "type"
+                ],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "builtin",
+                        "position": "after"
+                    },
+                    {
+                        "pattern": "*.+(styl|svg)",
+                        "group": "type",
+                        "position": "after",
+                        "patternOptions": {
+                            "matchBase": true
+                        }
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": ["react"],
+                "alphabetize": {
+                    "order": "asc"
+                },
+                "newlines-between": "always"
+            }
+        ],
+        "default-case": 0,
+        // Отключаем. Будем работать через prettier
+        "indent": 0,
+        "react/jsx-indent": 0,
+        "react/jsx-indent-props": 0,
+        "max-len": 0,
+        // Не добавляем запятую у последнего элемента в массиве/объекте
+        "comma-dangle": ["error", "never"],
+        "object-curly-newline": 0,
+        // После переноса проекта - переосмыслить
+        "lines-between-class-members": 0,
+        "react/require-default-props": 0,
+        "no-unused-vars": 0,
+        "react/button-has-type": 0,
+        "react/prop-types": 0,
+        "dot-notation": 0
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "paths": ["src"],
+                "extensions": [".ts", ".tsx"]
+            }
+        },
+        // указываем пути для внутренних пакетов
+        "import/internal-regex": "^@(fonts|types|store|services|hooks|layouts|pages).*$"
     }
 }
