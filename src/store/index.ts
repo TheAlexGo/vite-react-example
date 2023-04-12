@@ -26,7 +26,7 @@ export class Store {
             this.activePage = Pages.GENERAL;
         }
 
-        saveInLocalStorage<Store, keyof Store>(this, 'store', []);
+        saveInLocalStorage<Store, keyof Store>(this, 'store', ['activePage']);
     }
 
     setIsAppReady = (isAppReady: boolean) => {

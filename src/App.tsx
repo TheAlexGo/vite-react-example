@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useController } from '@hooks/useController';
 import { useStore } from '@hooks/useStore';
 import { LayoutMain } from '@layouts/LayoutMain/LayoutMain';
-import { General } from '@pages';
+import { General, NotFound } from '@pages';
 import { Pages } from '@types';
 
 import './App.styl';
@@ -28,6 +28,7 @@ const App: FC = observer(() => {
             <Routes>
                 <Route path={Pages.GENERAL} element={<LayoutMain />}>
                     <Route index element={<General />} />
+                    <Route path={Pages.NOT_FOUND} element={<NotFound />} />
                     <Route path="*" element={<Navigate to={Pages.NOT_FOUND} />} />
                 </Route>
             </Routes>
