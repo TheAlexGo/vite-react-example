@@ -39,11 +39,6 @@ Before starting, in the `.github/test.yml` file, you need to include the followi
 and in the `.github/production.yml` file, these:
 * DEPLOY_ENABLED: 1
 
-And add the following variables:
-* MASTER_BRANCH_ACTION_ENABLED: 1 - enable activity when pushing changes to `master`, else set 0
-* TEST_BRANCH_ACTION_ENABLED: 1 - enable activity when pushing changes to `test`, else set 0
-* PULL_REQUEST_ACTION_ENABLED: 1 - enable activity when creating a pull request, else set 0
-
 After uploading the solution to the `test` branch, the `.github/test.yml` script is launched, which will upload the build
 to your hosting on test domain. To do this, you must specify the following [github secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets):
 * DEPLOY_SERVER_HOST - hosting IP address
