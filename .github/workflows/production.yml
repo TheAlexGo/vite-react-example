@@ -6,6 +6,7 @@ on:
 
 env:
   DEPLOY_ENABLED: 0
+  DEPLOY_STORYBOOK_ENABLED: 0
   DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
   DEPLOY_STORYBOOK_PATH: ${{ secrets.DEPLOY_STORYBOOK_PATH }}
   BUILD_SCRIPT: npm run build
@@ -56,7 +57,7 @@ jobs:
           strip_components: 1
       # Доставляем собранный storybook приложение на сервер
       - name: Deploy Storybook to Server
-        if: ${{ env.DEPLOY_ENABLED == '1' }}
+        if: ${{ env.DEPLOY_STORYBOOK_ENABLED == '1' }}
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEPLOY_SERVER_HOST }}
