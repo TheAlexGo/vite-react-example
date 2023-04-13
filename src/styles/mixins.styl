@@ -8,7 +8,7 @@ loadFont($font-family, $file-path, $weight = normal, $style = normal) {
 }
 
 hover($stateClass) {
-    &:not(:disabled):not({$stateClass}__static):hover
+    &:not(:disabled):not({$stateClass}__static):hover,
     &{$stateClass}__hover {
         {block};
     }

@@ -1,3 +1,6 @@
-node_modules/
-.prettierrc.json
-.eslintrc.json
+node_modules
+dev-dist
+public
+.husky
+.github
+!/.storybook

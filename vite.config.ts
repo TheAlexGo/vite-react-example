@@ -10,23 +10,32 @@ import { VitePWA } from 'vite-plugin-pwa';
 import stylelintPlugin from 'vite-plugin-stylelint';
 import svgrPlugin from 'vite-plugin-svgr';
 
+export const generalConfig = {
+    resolve: {
+        alias: {
+            '@fonts': path.resolve(__dirname, './src/assets/fonts'),
+            '@store': path.resolve(__dirname, './src/store'),
+            '@services': path.resolve(__dirname, './src/services'),
+            '@types': path.resolve(__dirname, './src/types'),
+            '@hooks': path.resolve(__dirname, './src/hooks'),
+            '@components': path.resolve(__dirname, './src/components/ui'),
+            '@pages': path.resolve(__dirname, './src/components/pages'),
+            '@layouts': path.resolve(__dirname, './src/components/layouts'),
+            '@utils': path.resolve(__dirname, './src/utils')
+        }
+    },
+    css: {
+        postcss: {
+            plugins: [autoprefixer({})]
+        }
+    }
+};
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd());
     return {
-        resolve: {
-            alias: {
-                '@fonts': path.resolve(__dirname, './src/assets/fonts'),
-                '@store': path.resolve(__dirname, './src/store'),
-                '@services': path.resolve(__dirname, './src/services'),
-                '@types': path.resolve(__dirname, './src/types'),
-                '@hooks': path.resolve(__dirname, './src/hooks'),
-                '@components': path.resolve(__dirname, './src/components/ui'),
-                '@pages': path.resolve(__dirname, './src/components/pages'),
-                '@layouts': path.resolve(__dirname, './src/components/layouts'),
-                '@utils': path.resolve(__dirname, './src/utils')
-            }
-        },
+        ...generalConfig,
         plugins: [
             createHtmlPlugin({
                 minify: true,
@@ -77,15 +86,8 @@ export default defineConfig(({ mode }) => {
             }),
             svgrPlugin(),
             eslintPlugin(),
-            stylelintPlugin({
-                fix: true
-            })
+            stylelintPlugin()
         ],
-        css: {
-            postcss: {
-                plugins: [autoprefixer({})]
-            }
-        },
         build: {
             rollupOptions: {
                 output: {
