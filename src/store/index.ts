@@ -4,7 +4,7 @@ import { getPageName } from '@utils/routing';
 import { makeAutoObservable } from 'mobx';
 
 import { saveInLocalStorage } from '@store/saveInLocalStorage';
-import { IPageState, Pages } from '@types';
+import { IPageState, Pages, Themes } from '@types';
 
 export class Store {
     /**
@@ -14,14 +14,14 @@ export class Store {
     activePage: string;
     statePages: Map<string, IPageState> = new Map<string, IPageState>();
     isPageLoaded = false;
+    activeTheme = Themes.AUTO;
 
     constructor() {
         makeAutoObservable(this);
 
         const currentPage = getPageName(window.location.pathname);
         if (currentPage) {
-            const [, page] = currentPage;
-            this.activePage = page;
+            this.activePage = currentPage;
         } else {
             this.activePage = Pages.GENERAL;
         }
@@ -39,6 +39,10 @@ export class Store {
 
     setIsPageLoaded(isPageLoaded: boolean) {
         this.isPageLoaded = isPageLoaded;
+    }
+
+    setTheme(theme: Themes) {
+        this.activeTheme = theme;
     }
 
     updateStatePages(statePage: IPageState) {

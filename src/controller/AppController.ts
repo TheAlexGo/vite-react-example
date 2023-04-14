@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+import { toJS } from 'mobx';
+
 import { ApiService } from '@services/ApiService';
 import { store, Store } from '@store';
 import { IApiCallback, Pages } from '@types';
@@ -64,6 +66,7 @@ export class AppController {
         }
         this.debug('Загрузили страницу:', activePage);
         if (currentStatePage) {
+            this.debug('Загрузили состояние страницы:', toJS(currentStatePage));
             setTimeout(() => window.scrollTo(0, currentStatePage.positionY));
         }
         this.store.setIsPageLoaded(true);

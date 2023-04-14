@@ -11,12 +11,15 @@ export type IApiCallback<T = string> = (
     data: T
 ) => void;
 
-/**
- * Для проверки корректности выбранной страницы
- */
 export enum Pages {
     NOT_FOUND = '/not_found',
     GENERAL = '/'
+}
+
+export enum Themes {
+    LIGHT = 'light',
+    DARK = 'dark',
+    AUTO = 'auto'
 }
 
 export interface IPageState {
